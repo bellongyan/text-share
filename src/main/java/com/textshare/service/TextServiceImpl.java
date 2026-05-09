@@ -70,7 +70,7 @@ public class TextServiceImpl implements TextService {
         Text text = textRepository.findById(id)
                 .filter(t -> !t.getIsDeleted())
                 .filter(t -> t.getExpiresAt().isAfter(LocalDateTime.now()))
-                .orElseThrow(() -> new TextNotFoundException("该分享不存在或已过期"));
+                .orElseThrow(TextNotFoundException::new);
 
         String cacheKey = CONTENT_CACHE_KEY_PREFIX + id;
         redisTemplate.opsForValue().set(cacheKey, text.getContent(), 1, TimeUnit.HOURS);
@@ -112,10 +112,10 @@ public class TextServiceImpl implements TextService {
     public boolean deleteText(String id, String ip) {
         Text text = textRepository.findById(id)
                 .filter(t -> !t.getIsDeleted())
-                .orElseThrow(() -> new TextNotFoundException("该分享不存在或已过期"));
+                .orElseThrow(TextNotFoundException::new);
 
         if (!text.getIpAddress().equals(ip)) {
-            throw new ForbiddenException("无权限删除此分享");
+            throw new ForbiddenException();
         }
 
         text.setIsDeleted(true);

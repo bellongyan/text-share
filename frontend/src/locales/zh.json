@@ -1,0 +1,52 @@
+{
+  "app": {
+    "name": "TextShare",
+    "tagline": "企业局域网文本传输工具"
+  },
+  "send": {
+    "placeholder": "在此输入或粘贴文本内容...",
+    "submit": "生成分享链接",
+    "submitting": "生成分享链接...",
+    "shortcut": "按 Ctrl + Enter 快速提交",
+    "charCount": "已输入 {count} / {max} 字符",
+    "overLimit": "超出限制",
+    "clearConfirm": "确定要清空所有内容吗？",
+    "clearTitle": "清空内容",
+    "error": "生成链接失败，请重试"
+  },
+  "receive": {
+    "title": "查看文本 - TextShare",
+    "sharedFrom": "来自 {device} 的分享",
+    "unknownDevice": "未知设备",
+    "copyAll": "复制全部内容",
+    "copied": "已复制到剪贴板",
+    "loading": "加载中...",
+    "backHome": "返回首页",
+    "loadError": "加载失败，请返回首页重试"
+  },
+  "expired": {
+    "title": "链接已过期 - TextShare",
+    "heading": "链接已过期",
+    "description1": "此分享链接已超过 24 小时有效期",
+    "description2": "请联系发送方重新生成链接",
+    "backHome": "返回首页"
+  },
+  "link": {
+    "copy": "复制",
+    "copied": "已复制",
+    "copyLink": "复制链接",
+    "copiedToClipboard": "已复制到剪贴板",
+    "valid24h": "链接有效期为 24 小时",
+    "viewCount": "已被查看 {count} 次"
+  },
+  "theme": {
+    "toggleLight": "切换到浅色模式",
+    "toggleDark": "切换到深色模式"
+  },
+  "errors": {
+    "generateFailed": "生成链接失败，请重试",
+    "notFound": "该分享不存在或已过期",
+    "rateLimit": "请求过于频繁，请稍后再试",
+    "serverError": "服务器内部错误"
+  }
+}

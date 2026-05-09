@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from '@/composables/useI18n'
 
 const props = defineProps<{
   loading?: boolean
   disabled?: boolean
 }>()
+
+const { t } = useI18n()
 
 const isDisabled = computed(() => props.disabled || props.loading)
 </script>
@@ -38,6 +41,6 @@ const isDisabled = computed(() => props.disabled || props.loading)
       <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
     </svg>
 
-    <span>{{ loading ? '生成分享链接...' : '生成分享链接' }}</span>
+    <span>{{ loading ? t('send.submitting') : t('send.submit') }}</span>
   </button>
 </template>

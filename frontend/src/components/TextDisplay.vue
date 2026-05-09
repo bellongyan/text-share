@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@/composables/useClipboard'
+import { useI18n } from '@/composables/useI18n'
 
 const props = defineProps<{
   content: string
@@ -8,6 +9,7 @@ const props = defineProps<{
 }>()
 
 const { copied, copyToClipboard } = useClipboard()
+const { t } = useI18n()
 
 const handleCopyAll = async () => {
   await copyToClipboard(props.content)
@@ -25,7 +27,7 @@ const handleCopyAll = async () => {
       </div>
       <div>
         <p class="font-medium text-[var(--text-primary)]">
-          来自 {{ device || '未知设备' }} 的分享
+          {{ t('receive.sharedFrom', { device: device || t('receive.unknownDevice') }) }}
         </p>
         <p v-if="createdAt" class="text-sm text-[var(--text-secondary)]">
           {{ createdAt }}
@@ -57,7 +59,7 @@ const handleCopyAll = async () => {
       <svg v-else class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
       </svg>
-      <span>{{ copied ? '已复制到剪贴板' : '复制全部内容' }}</span>
+      <span>{{ copied ? t('receive.copied') : t('receive.copyAll') }}</span>
     </button>
   </div>
 </template>

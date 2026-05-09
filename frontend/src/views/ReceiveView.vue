@@ -3,12 +3,16 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import TextDisplay from '@/components/TextDisplay.vue'
 import ThemeIcon from '@/components/ThemeIcon.vue'
+import LanguageSwitch from '@/components/LanguageSwitch.vue'
 import { useTheme } from '@/composables/useTheme'
 import { useApi } from '@/composables/useApi'
+import { useI18n } from '@/composables/useI18n'
 import type { GetTextResponse } from '@/types'
 
 const { isDark, toggleTheme } = useTheme()
+const { initLocale } = useI18n()
 const { getText, incrementView } = useApi()
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 
@@ -28,6 +32,7 @@ const formatDate = (dateStr: string) => {
 }
 
 onMounted(async () => {
+  initLocale()
   const id = route.params.id as string
 
   try {
@@ -39,11 +44,10 @@ onMounted(async () => {
       return
     }
 
-    // 异步增加浏览次数，不阻塞页面加载
     incrementView(id).catch(() => {})
   } catch (err) {
-    const message = err instanceof Error ? err.message : '加载失败，请返回首页重试'
-    if (message.includes('不存在') || message.includes('过期')) {
+    const message = err instanceof Error ? err.message : t('receive.loadError')
+    if (message.includes('不存在') || message.includes('expired') || message.includes('不存在')) {
       router.push('/expired')
     } else {
       error.value = message
@@ -68,6 +72,7 @@ onMounted(async () => {
           <h1 class="text-2xl font-bold text-[var(--text-primary)]">TextShare</h1>
         </div>
         <ThemeIcon :is-dark="isDark" @toggle="toggleTheme" />
+        <LanguageSwitch />
       </header>
 
       <!-- Loading state -->
@@ -76,7 +81,7 @@ onMounted(async () => {
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <span class="ml-3 text-[var(--text-secondary)]">加载中...</span>
+        <span class="ml-3 text-[var(--text-secondary)]">{{ t('receive.loading') }}</span>
       </div>
 
       <!-- Error state -->
@@ -86,7 +91,7 @@ onMounted(async () => {
           to="/"
           class="inline-block mt-4 px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg transition-colors"
         >
-          返回首页
+          {{ t('receive.backHome') }}
         </router-link>
       </div>
 

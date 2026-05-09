@@ -4,8 +4,18 @@ import type {
   GetTextResponse,
   ViewCountResponse
 } from '@/types'
+import { getLocale } from '@/composables/useI18n'
 
 const API_BASE = '/api/v1/texts'
+
+function getHeaders(): HeadersInit {
+  const locale = getLocale()
+  return {
+    'Content-Type': 'application/json',
+    'Accept-Language': locale,
+    'X-Locale': locale
+  }
+}
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
@@ -20,7 +30,7 @@ export function useApi() {
     const request: CreateTextRequest = { content, device }
     const response = await fetch(API_BASE, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getHeaders(),
       body: JSON.stringify(request)
     })
     const result = await handleResponse<{ success: boolean; data: CreateTextResponse }>(response)
@@ -28,19 +38,26 @@ export function useApi() {
   }
 
   const getText = async (id: string): Promise<GetTextResponse> => {
-    const response = await fetch(`${API_BASE}/${id}`)
+    const response = await fetch(`${API_BASE}/${id}`, {
+      headers: getHeaders()
+    })
     const result = await handleResponse<{ success: boolean; data: GetTextResponse }>(response)
     return result.data
   }
 
   const incrementView = async (id: string): Promise<ViewCountResponse> => {
-    const response = await fetch(`${API_BASE}/${id}/view`, { method: 'POST' })
+    const response = await fetch(`${API_BASE}/${id}/view`, {
+      method: 'POST',
+      headers: getHeaders()
+    })
     const result = await handleResponse<{ success: boolean; data: ViewCountResponse }>(response)
     return result.data
   }
 
   const getViewCount = async (id: string): Promise<number> => {
-    const response = await fetch(`${API_BASE}/${id}/view`)
+    const response = await fetch(`${API_BASE}/${id}/view`, {
+      headers: getHeaders()
+    })
     const result = await handleResponse<{ success: boolean; data: ViewCountResponse }>(response)
     return result.data.viewCount
   }

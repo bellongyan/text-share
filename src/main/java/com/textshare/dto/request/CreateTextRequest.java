@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateTextRequest {
 
-    @NotBlank(message = "文本内容不能为空")
-    @Size(max = 50000, message = "文本内容不能超过50000字符")
+    @NotBlank(message = "textshare.error.validation.content.blank")
+    @Size(max = 50000, message = "textshare.error.validation.content.size")
     private String content;
 
     private String device;

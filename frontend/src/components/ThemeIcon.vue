@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useI18n } from '@/composables/useI18n'
+
 defineProps<{
   isDark: boolean
 }>()
@@ -6,6 +8,8 @@ defineProps<{
 const emit = defineEmits<{
   toggle: []
 }>()
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -18,7 +22,7 @@ const emit = defineEmits<{
            transition-all duration-200
            hover:scale-105 active:scale-95
            focus:outline-none focus:ring-2 focus:ring-amber-400/50"
-    :title="isDark ? '切换到浅色模式' : '切换到深色模式'"
+    :title="isDark ? t('theme.toggleLight') : t('theme.toggleDark')"
   >
     <!-- Sun icon for light mode -->
     <svg

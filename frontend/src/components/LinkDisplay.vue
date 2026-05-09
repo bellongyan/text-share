@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@/composables/useClipboard'
+import { useI18n } from '@/composables/useI18n'
 
 const props = defineProps<{
   link: string
@@ -7,6 +8,7 @@ const props = defineProps<{
 }>()
 
 const { copied, copyToClipboard } = useClipboard()
+const { t } = useI18n()
 
 const handleCopy = async () => {
   await copyToClipboard(props.link)
@@ -31,7 +33,7 @@ const handleCopy = async () => {
                  rounded-lg shadow-sm
                  transform transition-all duration-150
                  hover:scale-[1.02] active:scale-[0.98]"
-          :title="copied ? '已复制到剪贴板' : '复制链接'"
+          :title="copied ? t('link.copiedToClipboard') : t('link.copyLink')"
         >
           <!-- Copy icon -->
           <svg v-if="!copied" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -41,17 +43,17 @@ const handleCopy = async () => {
           <svg v-else class="w-4 h-4 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
-          <span>{{ copied ? '已复制' : '复制' }}</span>
+          <span>{{ copied ? t('link.copied') : t('link.copy') }}</span>
         </button>
       </div>
     </div>
 
     <p class="mt-3 text-center text-sm text-[var(--text-secondary)]">
-      链接有效期为 24 小时 | 已被查看 {{ viewCount || 0 }} 次
+      {{ t('link.valid24h') }} | {{ t('link.viewCount', { count: viewCount || 0 }) }}
     </p>
 
     <p v-if="copied" class="mt-2 text-center text-sm text-emerald-500 font-medium animate-fade-in">
-      已复制到剪贴板
+      {{ t('link.copiedToClipboard') }}
     </p>
   </div>
 </template>

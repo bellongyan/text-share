@@ -33,7 +33,7 @@ public class RateLimitFilter extends OncePerRequestFilter {
         String ip = getClientIp(request);
         if (!rateLimitService.isAllowed(ip)) {
             log.warn("Rate limit exceeded for IP: {}", ip);
-            throw new RateLimitExceededException("请求过于频繁，请稍后再试");
+            throw new RateLimitExceededException();
         }
 
         filterChain.doFilter(request, response);

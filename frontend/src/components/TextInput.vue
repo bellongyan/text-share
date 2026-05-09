@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useI18n } from '@/composables/useI18n'
 
 const props = defineProps<{
   modelValue: string
@@ -11,6 +12,7 @@ const emit = defineEmits<{
   'clear': []
 }>()
 
+const { t } = useI18n()
 const maxLength = props.maxLength || 50000
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
 
@@ -24,7 +26,7 @@ const handleInput = (event: Event) => {
 
 const handleClear = () => {
   if (charCount.value > 100) {
-    if (confirm('确定要清空所有内容吗？')) {
+    if (confirm(t('send.clearConfirm'))) {
       emit('clear')
     }
   } else {
@@ -45,7 +47,7 @@ defineExpose({ focus })
       ref="textareaRef"
       :value="modelValue"
       @input="handleInput"
-      placeholder="在此输入或粘贴文本内容..."
+      :placeholder="t('send.placeholder')"
       :maxlength="maxLength"
       class="w-full min-h-[200px] md:min-h-[300px] lg:min-h-[400px] p-4 pr-12
              bg-[var(--bg-card)] dark:bg-[var(--bg-card)]
@@ -70,7 +72,7 @@ defineExpose({ focus })
              hover:bg-gray-300 dark:hover:bg-gray-600
              rounded-lg opacity-0 group-hover:opacity-100
              transition-all duration-150"
-      title="清空内容"
+      :title="t('send.clearTitle')"
     >
       <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -81,8 +83,8 @@ defineExpose({ focus })
   <!-- Character count -->
   <div class="mt-2 flex justify-between items-center text-sm">
     <span :class="isOverLimit ? 'text-red-500' : 'text-[var(--text-secondary)]'">
-      已输入 {{ charCount.toLocaleString() }} / {{ maxLength.toLocaleString() }} 字符
+      {{ t('send.charCount', { count: charCount.toLocaleString(), max: maxLength.toLocaleString() }) }}
     </span>
-    <span v-if="isOverLimit" class="text-red-500 font-medium">超出限制</span>
+    <span v-if="isOverLimit" class="text-red-500 font-medium">{{ t('send.overLimit') }}</span>
   </div>
 </template>

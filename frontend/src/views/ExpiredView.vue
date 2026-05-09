@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import ThemeIcon from '@/components/ThemeIcon.vue'
+import LanguageSwitch from '@/components/LanguageSwitch.vue'
 import { useTheme } from '@/composables/useTheme'
+import { useI18n } from '@/composables/useI18n'
 
 const { isDark, toggleTheme } = useTheme()
+const { initLocale, t } = useI18n()
 const router = useRouter()
+
+initLocale()
 
 const goHome = () => {
   router.push('/')
@@ -25,6 +30,7 @@ const goHome = () => {
           <h1 class="text-2xl font-bold text-[var(--text-primary)]">TextShare</h1>
         </div>
         <ThemeIcon :is-dark="isDark" @toggle="toggleTheme" />
+        <LanguageSwitch />
       </header>
 
       <!-- Expired content -->
@@ -35,11 +41,11 @@ const goHome = () => {
           </svg>
         </div>
 
-        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-3">链接已过期</h2>
+        <h2 class="text-2xl font-bold text-[var(--text-primary)] mb-3">{{ t('expired.heading') }}</h2>
 
         <p class="text-[var(--text-secondary)] text-center mb-8 max-w-sm">
-          此分享链接已超过 24 小时有效期<br />
-          请联系发送方重新生成链接
+          {{ t('expired.description1') }}<br />
+          {{ t('expired.description2') }}
         </p>
 
         <button
@@ -54,7 +60,7 @@ const goHome = () => {
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
           </svg>
-          <span>返回首页</span>
+          <span>{{ t('expired.backHome') }}</span>
         </button>
       </main>
     </div>

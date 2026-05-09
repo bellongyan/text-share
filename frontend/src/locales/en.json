@@ -1,0 +1,52 @@
+{
+  "app": {
+    "name": "TextShare",
+    "tagline": "LAN Text Sharing Tool"
+  },
+  "send": {
+    "placeholder": "Enter or paste text content here...",
+    "submit": "Generate Share Link",
+    "submitting": "Generating...",
+    "shortcut": "Press Ctrl + Enter to submit quickly",
+    "charCount": "{count} / {max} characters",
+    "overLimit": "Over limit",
+    "clearConfirm": "Are you sure you want to clear all content?",
+    "clearTitle": "Clear content",
+    "error": "Failed to generate link. Please try again."
+  },
+  "receive": {
+    "title": "View Text - TextShare",
+    "sharedFrom": "Shared from {device}",
+    "unknownDevice": "Unknown device",
+    "copyAll": "Copy All Content",
+    "copied": "Copied to clipboard",
+    "loading": "Loading...",
+    "backHome": "Back to Home",
+    "loadError": "Failed to load. Please return to home and try again."
+  },
+  "expired": {
+    "title": "Link Expired - TextShare",
+    "heading": "Link Expired",
+    "description1": "This share link has exceeded its 24-hour validity",
+    "description2": "Please contact the sender to generate a new link",
+    "backHome": "Back to Home"
+  },
+  "link": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyLink": "Copy Link",
+    "copiedToClipboard": "Copied to clipboard",
+    "valid24h": "Link valid for 24 hours",
+    "viewCount": "Viewed {count} times"
+  },
+  "theme": {
+    "toggleLight": "Switch to light mode",
+    "toggleDark": "Switch to dark mode"
+  },
+  "errors": {
+    "generateFailed": "Failed to generate link. Please try again.",
+    "notFound": "This share does not exist or has expired.",
+    "rateLimit": "Too many requests. Please try again later.",
+    "serverError": "Internal server error"
+  }
+}

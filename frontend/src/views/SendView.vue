@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { ref, computed, onUnmounted } from 'vue'
+import { ref, computed, onUnmounted, onMounted } from 'vue'
 import TextInput from '@/components/TextInput.vue'
 import ShareButton from '@/components/ShareButton.vue'
 import LinkDisplay from '@/components/LinkDisplay.vue'
 import ThemeIcon from '@/components/ThemeIcon.vue'
+import LanguageSwitch from '@/components/LanguageSwitch.vue'
 import { useTheme } from '@/composables/useTheme'
 import { useApi } from '@/composables/useApi'
+import { useI18n } from '@/composables/useI18n'
 
 const { isDark, toggleTheme } = useTheme()
+const { initLocale } = useI18n()
 const { createText, getViewCount } = useApi()
+const { t } = useI18n()
 
 const textContent = ref('')
 const generatedLink = ref('')
@@ -62,7 +66,7 @@ const generateLink = async () => {
     viewCount.value = result.viewCount || 0
     startPollingViewCount(result.id)
   } catch (err) {
-    error.value = err instanceof Error ? err.message : '生成链接失败，请重试'
+    error.value = err instanceof Error ? err.message : t('send.error')
   } finally {
     loading.value = false
   }
@@ -73,6 +77,10 @@ const handleKeydown = (event: KeyboardEvent) => {
     generateLink()
   }
 }
+
+onMounted(() => {
+  initLocale()
+})
 
 onUnmounted(() => {
   stopPollingViewCount()
@@ -97,6 +105,7 @@ onUnmounted(() => {
           <h1 class="text-2xl font-bold text-[var(--text-primary)]">TextShare</h1>
         </div>
         <ThemeIcon :is-dark="isDark" @toggle="toggleTheme" />
+        <LanguageSwitch />
       </header>
 
       <!-- Main content -->
@@ -122,7 +131,7 @@ onUnmounted(() => {
 
         <!-- Keyboard hint -->
         <p class="text-xs text-center text-[var(--text-placeholder)]">
-          按 Ctrl + Enter 快速提交
+          {{ t('send.shortcut') }}
         </p>
 
         <!-- Link display -->
@@ -135,7 +144,7 @@ onUnmounted(() => {
 
       <!-- Footer -->
       <footer class="mt-12 text-center text-sm text-[var(--text-placeholder)]">
-        <p>企业局域网文本传输工具</p>
+        <p>{{ t('app.tagline') }}</p>
       </footer>
     </div>
   </div>
