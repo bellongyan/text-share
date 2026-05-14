@@ -32,6 +32,7 @@ public class CleanupScheduler {
     }
 
     @Scheduled(fixedRate = 300000)
+    @Transactional
     public void syncViewCount() {
         List<String> keysToSync = new ArrayList<>();
         try (Cursor<String> cursor = redisTemplate.scan(ScanOptions.scanOptions()
