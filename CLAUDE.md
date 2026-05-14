@@ -89,9 +89,9 @@ docker-compose down
 - **Expiry**: Texts expire after 24 hours; `CleanupScheduler` runs periodically
 - **Rate limiting**: Per-IP rate limiting via `RateLimitService` backed by Redis
 - **Multi-tenancy**: `TenantInterceptor` extracts tenant from request header `X-Tenant-Code`
-- **Security**: HTML escaping via `HtmlEscapeUtil` before storage
+- **Security**: HTML escaping via `HtmlEscapeUtil` at output time (XSS prevention)
 - **Audit logging**: All access logged to `access_logs` table via `AuditLogService`
-- **View count**: Uses Redis for real-time count, syncs to PostgreSQL on each increment
+- **View count**: Uses Redis for real-time count, syncs to PostgreSQL periodically via CleanupScheduler
 - **Docker production**: Single image with nginx (port 80) proxying to backend (port 8080)
 
 ## Database Schema

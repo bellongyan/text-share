@@ -12,6 +12,8 @@
 - 多租户支持
 - 限流保护
 - 深色模式支持
+- 国际化支持（中文/英文）
+- XSS防护（输出编码）
 
 ## 技术栈
 
@@ -39,6 +41,14 @@ npm run dev
 ```bash
 DB_PASSWORD=xxx REDIS_PASSWORD=xxx docker-compose up -d
 ```
+
+### 环境变量
+
+| 变量 | 描述 |
+|------|------|
+| `DB_PASSWORD` | PostgreSQL 密码 |
+| `REDIS_PASSWORD` | Redis 密码 |
+| `CORS_ALLOWED_ORIGINS` | CORS 允许的来源（逗号分隔） |
 
 ## API 接口
 

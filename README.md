@@ -12,6 +12,8 @@ A LAN-based text sharing application. Share text via generated links that expire
 - Multi-tenancy support
 - Rate limiting
 - Dark mode support
+- i18n support (Chinese/English)
+- XSS protection (output encoding)
 
 ## Tech Stack
 
@@ -39,6 +41,14 @@ npm run dev
 ```bash
 DB_PASSWORD=xxx REDIS_PASSWORD=xxx docker-compose up -d
 ```
+
+### Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `DB_PASSWORD` | PostgreSQL password |
+| `REDIS_PASSWORD` | Redis password |
+| `CORS_ALLOWED_ORIGINS` | CORS allowed origins (comma-separated) |
 
 ## API Endpoints
 
