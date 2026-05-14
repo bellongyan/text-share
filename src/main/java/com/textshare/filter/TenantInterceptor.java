@@ -20,7 +20,7 @@ public class TenantInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String tenantCode = request.getHeader(TENANT_HEADER);
-        if (tenantCode != null) {
+        if (tenantCode != null && !tenantCode.isBlank()) {
             CURRENT_TENANT.set(tenantCode);
             log.debug("Tenant context set: {}", tenantCode);
         }
@@ -29,6 +29,19 @@ public class TenantInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        CURRENT_TENANT.remove();
+        try {
+            // Clean up tenant context if it was set by this request
+            String tenantCode = request.getHeader(TENANT_HEADER);
+            if (tenantCode != null && !tenantCode.isBlank()) {
+                CURRENT_TENANT.remove();
+            }
+        } catch (Exception e) {
+            // Ensure ThreadLocal is always cleaned, even if cleanup fails
+            try {
+                CURRENT_TENANT.remove();
+            } catch (Exception ignored) {
+                // ignore
+            }
+        }
     }
 }
