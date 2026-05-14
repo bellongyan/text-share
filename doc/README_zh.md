@@ -48,7 +48,10 @@ DB_PASSWORD=xxx REDIS_PASSWORD=xxx docker-compose up -d
 |------|------|
 | `DB_PASSWORD` | PostgreSQL 密码 |
 | `REDIS_PASSWORD` | Redis 密码 |
-| `CORS_ALLOWED_ORIGINS` | CORS 允许的来源（逗号分隔） |
+| `CORS_ALLOWED_ORIGINS` | CORS 允许的来源（逗号分隔，**会覆盖默认值**） |
+
+> **注意**: 默认 CORS 来源为 `http://localhost:5173,http://localhost:3000`，用于本地开发。
+> 生产环境请设置 `CORS_ALLOWED_ORIGINS` 为你实际的前端 URL。
 
 ## API 接口
 

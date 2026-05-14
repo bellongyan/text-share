@@ -48,7 +48,10 @@ DB_PASSWORD=xxx REDIS_PASSWORD=xxx docker-compose up -d
 |----------|-------------|
 | `DB_PASSWORD` | PostgreSQL password |
 | `REDIS_PASSWORD` | Redis password |
-| `CORS_ALLOWED_ORIGINS` | CORS allowed origins (comma-separated) |
+| `CORS_ALLOWED_ORIGINS` | CORS allowed origins (comma-separated, **overrides default**) |
+
+> **Note**: The default CORS origins are `http://localhost:5173,http://localhost:3000` for local development.
+> In production, set `CORS_ALLOWED_ORIGINS` to your actual frontend URL(s).
 
 ## API Endpoints
 
