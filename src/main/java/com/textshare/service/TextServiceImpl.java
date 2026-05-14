@@ -87,16 +87,10 @@ public class TextServiceImpl implements TextService {
     }
 
     @Override
-    @Transactional
     public int incrementViewCount(String id) {
         String viewKey = VIEW_COUNT_KEY_PREFIX + id;
         Long count = redisTemplate.opsForValue().increment(viewKey);
-
-        textRepository.findById(id).ifPresent(text -> {
-            text.setViewCount(count != null ? count.intValue() : 0);
-            textRepository.save(text);
-        });
-
+        // DB sync is handled by CleanupScheduler.syncViewCount() to avoid race conditions
         return count != null ? count.intValue() : 0;
     }
 
