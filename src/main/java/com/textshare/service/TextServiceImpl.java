@@ -40,6 +40,10 @@ public class TextServiceImpl implements TextService {
     @Override
     @Transactional
     public TextCreateResponse createText(CreateTextRequest request, String ip, String userAgent) {
+        if (request.getContent() != null && request.getContent().length() > maxLength) {
+            throw new com.textshare.exception.ValidationException(
+                    "textshare.error.validation.content.size");
+        }
         String id = securityService.generateObfuscatedId();
 
         Text text = Text.builder()

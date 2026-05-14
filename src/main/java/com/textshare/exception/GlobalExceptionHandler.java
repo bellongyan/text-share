@@ -45,6 +45,14 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error("FORBIDDEN", message));
     }
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ApiResponse<Void>> handleValidation(ValidationException ex) {
+        log.warn("Validation error: {}", ex.getMessage());
+        String message = resolveMessage(ex.getMessage(), ValidationException.MESSAGE_KEY);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.error("INVALID_CONTENT", message));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Void>> handleValidation(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult().getFieldErrors().stream()
