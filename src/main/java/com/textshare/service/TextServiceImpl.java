@@ -80,7 +80,7 @@ public class TextServiceImpl implements TextService {
 
         return TextGetResponse.builder()
                 .id(text.getId())
-                .content(text.getContent())
+                .content(securityService.escapeHtml(text.getContent()))
                 .device(text.getDeviceInfo())
                 .viewCount(text.getViewCount())
                 .createdAt(text.getCreatedAt())
