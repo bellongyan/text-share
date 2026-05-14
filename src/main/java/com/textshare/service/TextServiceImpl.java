@@ -40,12 +40,11 @@ public class TextServiceImpl implements TextService {
     @Override
     @Transactional
     public TextCreateResponse createText(CreateTextRequest request, String ip, String userAgent) {
-        String escapedContent = securityService.escapeHtml(request.getContent());
         String id = securityService.generateObfuscatedId();
 
         Text text = Text.builder()
                 .id(id)
-                .content(escapedContent)
+                .content(request.getContent())
                 .ipAddress(ip)
                 .userAgent(userAgent)
                 .deviceInfo(request.getDevice())
